@@ -15,7 +15,7 @@ class ZaoobTeamMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $permission)
+    public function handle(Request $request, Closure $next, $permission = false)
     {
         if (!$request->hasMacro('modelTeamable')) {
             throw new Exception('Request not has macro `modelTeamable()`.');
@@ -25,6 +25,10 @@ class ZaoobTeamMiddleware
 
         if (!$member) {
             abort(404);
+        }
+
+        if (!$permission) {
+            return $next($request);
         }
 
         $rules = config('zaoob.team.rules.' . $member->rule);
