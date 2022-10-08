@@ -1,0 +1,38 @@
+{
+    "name": "zaoob/laravel-team",
+    "description": "You can create and mange team member for any model",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "team",
+        "zaoob"
+    ],
+    "authors": [
+        {
+            "name": "Karim Mohamed (Komtcho)",
+            "email": "komicho1996@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "laravel/framework": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zaoob\\Laravel\\Team\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zaoob\\Laravel\\Team\\TeamServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
