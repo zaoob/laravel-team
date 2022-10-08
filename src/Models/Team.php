@@ -24,4 +24,14 @@ class Team extends Model
         'rule',
         'expires_at',
     ];
+
+    public function user()
+    {
+        return $this->hasOne($this->member_type, 'id', 'member_id');
+    }
+
+    public function ship()
+    {
+        return $this->hasOne($this->modelable_type, 'id', 'modelable_id');
+    }
 }
