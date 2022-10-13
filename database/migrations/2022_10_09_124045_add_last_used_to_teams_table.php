@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('zaoob_teams', function (Blueprint $table) {
-            $table->timestamp('last_used_at')->nullable();
+            $table->timestamp('last_used_at')->after('expires_at')->nullable();
         });
     }
 

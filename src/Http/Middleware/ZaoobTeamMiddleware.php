@@ -25,9 +25,11 @@ class ZaoobTeamMiddleware
         $member = $request->modelTeamable()->getMembers->where('member_id', $request->user()->id)->firstOrFail();
 
         if (!$permission) {
+            
             $member->update([
                 'last_used_at' => Carbon::now(),
             ]);
+
             return $next($request);
         }
 
@@ -36,9 +38,11 @@ class ZaoobTeamMiddleware
         if ($member->rule != '*' && !in_array('zaoobTeam:' . $permission, $rules)) {
             abort(403, 'You do not have permission to it');
         }
+
         $member->update([
             'last_used_at' => Carbon::now(),
         ]);
+
         return $next($request);
     }
 }
