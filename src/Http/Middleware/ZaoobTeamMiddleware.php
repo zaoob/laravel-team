@@ -2,6 +2,7 @@
 
 namespace Zaoob\Laravel\Team\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,13 +22,14 @@ class ZaoobTeamMiddleware
             throw new Exception('Request not has macro `modelTeamable()`.');
         }
 
-        $member = $request->modelTeamable()->getMembers->where('member_id', $request->user()->id)->first();
-
-        if (!$member) {
-            abort(404);
-        }
+        $member = $request->modelTeamable()->getMembers->where('member_id', $request->user()->id)->firstOrFail();
 
         if (!$permission) {
+            
+            $member->update([
+                'last_used_at' => Carbon::now(),
+            ]);
+
             return $next($request);
         }
 
@@ -36,6 +38,10 @@ class ZaoobTeamMiddleware
         if ($member->rule != '*' && !in_array('zaoobTeam:' . $permission, $rules)) {
             abort(403, 'You do not have permission to it');
         }
+
+        $member->update([
+            'last_used_at' => Carbon::now(),
+        ]);
 
         return $next($request);
     }
